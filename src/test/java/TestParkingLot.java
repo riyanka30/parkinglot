@@ -72,7 +72,7 @@ public class TestParkingLot {
     }
 
     @Test
-    public void OwnerShouldKnowParkingLotFull(){
+    public void OwnerShouldKnowParkingLotFull_When_Parked(){
         LotOwner owner = new LotOwner();
         ParkingLot lot = new ParkingLot(1);
         lot.addOwner(owner);
@@ -82,13 +82,37 @@ public class TestParkingLot {
     }
 
     @Test
-    public void OwnerShouldKnowParkingLotNotFull(){
+    public void OwnerShouldKnowParkingLotNotFull_When_CarParked(){
         LotOwner owner = new LotOwner();
         ParkingLot lot = new ParkingLot(2);
         lot.addOwner(owner);
         Car car = new Car();
         lot.park(car);
         lot.park(car);
+        Assert.assertFalse(owner.fullSign);
+    }
+
+    @Test
+    public void OwnerShouldKnowParkingLotNotFull_When_carUnparked(){
+        LotOwner owner = new LotOwner();
+        ParkingLot lot = new ParkingLot(1);
+        lot.addOwner(owner);
+        Car car = new Car();
+        lot.park(car);
+        Assert.assertTrue(owner.fullSign);
+        lot.unpark(car);
+        Assert.assertFalse(owner.fullSign);
+    }
+
+    @Test
+    public void OwnerShouldKnowParkingLotNotFull_When_unparkingDifferentCar(){
+        LotOwner owner = new LotOwner();
+        ParkingLot lot = new ParkingLot(2);
+        lot.addOwner(owner);
+        Car car1 = new Car();
+        Car car2 = new Car();
+        lot.park(car1);
+        lot.unpark(car2);
         Assert.assertFalse(owner.fullSign);
     }
 

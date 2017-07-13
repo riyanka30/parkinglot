@@ -6,7 +6,7 @@ import java.util.*;
 public class ParkingLot {
 
     private final int parkingLotSize;
-    private final Set< Car> slotList;
+    private final Set<Car> slotList;
     private LotOwner owner;
 
     public ParkingLot(int parkingLotSize) {
@@ -14,22 +14,20 @@ public class ParkingLot {
         slotList = new HashSet<Car>();
     }
 
-    public boolean park( Car car){
-        boolean parkedCar=assignSlot(car);
-        informOwnerLotFullStatus();
+    public boolean park(Car car) {
+        boolean parkedCar = assignSlot(car);
+        informOwnerLotFullStatus(isFull());
         return parkedCar;
     }
 
-    private void informOwnerLotFullStatus() {
-        if(isFull()) {
-            if(owner!=null) {
-                owner.setFullSign(true);
-            }
-        }
+    private void informOwnerLotFullStatus(boolean status) {
+        if (owner != null) owner.setFullSign(status);
     }
 
     public boolean unpark(Car car) {
-        return slotList.remove(car);
+        boolean unparkedCar = slotList.remove(car);
+        informOwnerLotFullStatus(isFull());
+        return unparkedCar;
     }
 
     private boolean assignSlot(Car car) {
