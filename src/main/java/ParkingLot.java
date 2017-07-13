@@ -1,4 +1,3 @@
-import java.security.acl.Owner;
 import java.util.*;
 
 /**
@@ -17,8 +16,16 @@ public class ParkingLot {
 
     public boolean park( Car car){
         boolean parkedCar=assignSlot(car);
-        if(isFull()) owner.setFullSign(true);
+        informOwnerLotFullStatus();
         return parkedCar;
+    }
+
+    private void informOwnerLotFullStatus() {
+        if(isFull()) {
+            if(owner!=null) {
+                owner.setFullSign(true);
+            }
+        }
     }
 
     public boolean unpark(Car car) {
