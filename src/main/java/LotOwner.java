@@ -3,7 +3,7 @@
  */
 public class LotOwner {
 
-    public boolean fullSign;
+    private boolean fullSign;
 
     public void setFullSign(boolean fullSign) {
         this.fullSign = fullSign;

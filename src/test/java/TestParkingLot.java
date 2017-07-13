@@ -78,7 +78,7 @@ public class TestParkingLot {
         lot.addOwner(owner);
         Car car = new Car();
         lot.park(car);
-        Assert.assertTrue(owner.fullSign);
+        Assert.assertTrue(owner.isFullSign());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class TestParkingLot {
         Car car = new Car();
         lot.park(car);
         lot.park(car);
-        Assert.assertFalse(owner.fullSign);
+        Assert.assertFalse(owner.isFullSign());
     }
 
     @Test
@@ -99,9 +99,9 @@ public class TestParkingLot {
         lot.addOwner(owner);
         Car car = new Car();
         lot.park(car);
-        Assert.assertTrue(owner.fullSign);
+        Assert.assertTrue(owner.isFullSign());
         lot.unpark(car);
-        Assert.assertFalse(owner.fullSign);
+        Assert.assertFalse(owner.isFullSign());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class TestParkingLot {
         Car car2 = new Car();
         lot.park(car1);
         lot.unpark(car2);
-        Assert.assertFalse(owner.fullSign);
+        Assert.assertFalse(owner.isFullSign());
     }
 
 }
