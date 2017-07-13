@@ -7,26 +7,30 @@ public class ParkingLot {
 
     private final int parkingLotSize;
     private final Set<Car> slotList;
-    private LotOwner owner;
+    private final Set<ParkingLotObserver> parkingLotObservers;
 
     public ParkingLot(int parkingLotSize) {
         this.parkingLotSize = parkingLotSize;
         slotList = new HashSet<Car>();
+        parkingLotObservers = new HashSet<ParkingLotObserver>();
     }
 
     public boolean park(Car car) {
         boolean parkedCar = assignSlot(car);
-        informOwnerLotFullStatus(isFull());
+        informFullStatus(isFull());
         return parkedCar;
     }
 
-    private void informOwnerLotFullStatus(boolean status) {
-        if (owner != null) owner.setFullSign(status);
+    private void informFullStatus(boolean status) {
+        Iterator<ParkingLotObserver> parkingLotObserverIterator = parkingLotObservers.iterator();
+        while(parkingLotObserverIterator.hasNext()){
+            parkingLotObserverIterator.next().informFullStatus(status);
+        }
     }
 
     public boolean unpark(Car car) {
         boolean unparkedCar = slotList.remove(car);
-        informOwnerLotFullStatus(isFull());
+        informFullStatus(isFull());
         return unparkedCar;
     }
 
@@ -39,7 +43,8 @@ public class ParkingLot {
         return slotList.size() == parkingLotSize;
     }
 
-    public void addOwner(LotOwner owner) {
-        this.owner = owner;
+    public void addParkingLotObserver(ParkingLotObserver parkingLotObserver) {
+        parkingLotObservers.add(parkingLotObserver);
     }
+
 }

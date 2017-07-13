@@ -75,7 +75,7 @@ public class TestParkingLot {
     public void OwnerShouldKnowParkingLotFull_When_Parked(){
         LotOwner owner = new LotOwner();
         ParkingLot lot = new ParkingLot(1);
-        lot.addOwner(owner);
+        lot.addParkingLotObserver(owner);
         Car car = new Car();
         lot.park(car);
         Assert.assertTrue(owner.isFullSign());
@@ -85,7 +85,7 @@ public class TestParkingLot {
     public void OwnerShouldKnowParkingLotNotFull_When_CarParked(){
         LotOwner owner = new LotOwner();
         ParkingLot lot = new ParkingLot(2);
-        lot.addOwner(owner);
+        lot.addParkingLotObserver(owner);
         Car car = new Car();
         lot.park(car);
         lot.park(car);
@@ -96,7 +96,7 @@ public class TestParkingLot {
     public void OwnerShouldKnowParkingLotNotFull_When_carUnparked(){
         LotOwner owner = new LotOwner();
         ParkingLot lot = new ParkingLot(1);
-        lot.addOwner(owner);
+        lot.addParkingLotObserver(owner);
         Car car = new Car();
         lot.park(car);
         Assert.assertTrue(owner.isFullSign());
@@ -108,12 +108,33 @@ public class TestParkingLot {
     public void OwnerShouldKnowParkingLotNotFull_When_unparkingDifferentCar(){
         LotOwner owner = new LotOwner();
         ParkingLot lot = new ParkingLot(2);
-        lot.addOwner(owner);
+        lot.addParkingLotObserver(owner);
         Car car1 = new Car();
         Car car2 = new Car();
         lot.park(car1);
         lot.unpark(car2);
         Assert.assertFalse(owner.isFullSign());
+    }
+
+    @Test
+    public void SecurityShouldKnowParkingLotFull_When_Parked(){
+        SecurityPersonnel personnel = new SecurityPersonnel();
+        ParkingLot lot = new ParkingLot(1);
+        lot.addParkingLotObserver(personnel);
+        Car car = new Car();
+        lot.park(car);
+        Assert.assertTrue(personnel.isFullSign());
+    }
+
+    @Test
+    public void SecurityShouldKnowParkingLotNotFull_When_CarParked(){
+        SecurityPersonnel personnel = new SecurityPersonnel();
+        ParkingLot lot = new ParkingLot(2);
+        lot.addParkingLotObserver(personnel);
+        Car car = new Car();
+        lot.park(car);
+        lot.park(car);
+        Assert.assertFalse(personnel.isFullSign());
     }
 
 }
