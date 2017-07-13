@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+
 /**
  * Created by vidhyan on 13/07/17.
  */
@@ -68,6 +69,27 @@ public class TestParkingLot {
         lot.park(car1);
         boolean isFull=lot.isFull();
         Assert.assertFalse(isFull);
+    }
+
+    @Test
+    public void OwnerShouldKnowParkingLotFull(){
+        LotOwner owner = new LotOwner();
+        ParkingLot lot = new ParkingLot(1);
+        lot.addOwner(owner);
+        Car car = new Car();
+        lot.park(car);
+        Assert.assertTrue(owner.fullSign);
+    }
+
+    @Test
+    public void OwnerShouldKnowParkingLotNotFull(){
+        LotOwner owner = new LotOwner();
+        ParkingLot lot = new ParkingLot(2);
+        lot.addOwner(owner);
+        Car car = new Car();
+        lot.park(car);
+        lot.park(car);
+        Assert.assertFalse(owner.fullSign);
     }
 
 }

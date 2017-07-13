@@ -1,3 +1,4 @@
+import java.security.acl.Owner;
 import java.util.*;
 
 /**
@@ -7,31 +8,25 @@ public class ParkingLot {
 
     private final int parkingLotSize;
     private final Set< Car> slotList;
+    private LotOwner owner;
 
     public ParkingLot(int parkingLotSize) {
-
         this.parkingLotSize = parkingLotSize;
-
         slotList = new HashSet<Car>();
-
     }
 
-
     public boolean park( Car car){
-
-        boolean assigned = assignSlot(car);
-        return assigned;
+        boolean parkedCar=assignSlot(car);
+        if(isFull()) owner.setFullSign(true);
+        return parkedCar;
     }
 
     public boolean unpark(Car car) {
         return slotList.remove(car);
     }
 
-
     private boolean assignSlot(Car car) {
-        if (isFull()) {
-            return false;
-        }
+        if (isFull()) return false;
         return slotList.add(car);
     }
 
@@ -39,5 +34,7 @@ public class ParkingLot {
         return slotList.size() == parkingLotSize;
     }
 
-
+    public void addOwner(LotOwner owner) {
+        this.owner = owner;
+    }
 }
